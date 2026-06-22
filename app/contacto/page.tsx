@@ -90,7 +90,7 @@ export default function ContactoPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           access_key: WEB3FORMS_KEY,
-          subject: `Nuevo contacto INFOFIS — ${formData.nombre}`,
+          subject: `${formData.nombre} - Nuevo Contacto INFOFIS`,
           from_name: "INFOFIS Website",
           nombre: formData.nombre,
           empresa: formData.empresa,
