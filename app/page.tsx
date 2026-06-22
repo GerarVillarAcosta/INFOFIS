@@ -62,8 +62,14 @@ export default function Home() {
             <div className="space-y-8">
               <div className="hero-enter">
                 <span
-                  className="inline-block text-xs font-semibold tracking-widest uppercase py-1 px-3 rounded-full border mb-6"
-                  style={{ borderColor: "#76b900", color: "#76b900" }}
+                  className="inline-block text-xs font-semibold tracking-widest uppercase mb-6"
+                  style={{
+                    color: "#76b900",
+                    background: "color-mix(in srgb, var(--bg) 75%, transparent)",
+                    border: "1px solid rgba(118,185,0,0.5)",
+                    padding: "4px 12px",
+                    borderRadius: "999px",
+                  }}
                 >
                   Desarrollo Web · Paraguay
                 </span>

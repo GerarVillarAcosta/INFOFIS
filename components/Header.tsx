@@ -42,8 +42,8 @@ export function Header() {
           />
         </Link>
 
-        {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-7">
+        {/* Desktop nav — visible only ≥1024px */}
+        <nav className="hidden lg:flex items-center gap-7">
           {NAV.map((l) => (
             <Link
               key={l.href}
@@ -69,17 +69,17 @@ export function Header() {
             </button>
           )}
 
-          {/* CTA */}
+          {/* CTA — visible only ≥1024px */}
           <Link
             href="/contacto"
-            className="btn btn-neon hidden md:inline-flex px-4 py-2 text-sm rounded-md"
+            className="btn btn-neon hidden lg:inline-flex px-4 py-2 text-sm rounded-md"
           >
             Solicitar presupuesto
           </Link>
 
-          {/* Mobile toggle */}
+          {/* Hamburger — visible <1024px */}
           <button
-            className="md:hidden p-2 rounded-md"
+            className="lg:hidden p-2 rounded-md"
             style={{ color: "var(--fg)" }}
             onClick={() => setOpen(!open)}
             aria-label="Abrir menú"
@@ -89,10 +89,10 @@ export function Header() {
         </div>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile/tablet menu — visible <1024px */}
       {open && (
         <div
-          className="md:hidden border-t px-4 py-5 flex flex-col gap-1"
+          className="lg:hidden border-t px-4 py-5 flex flex-col gap-1"
           style={{ backgroundColor: "var(--bg)", borderColor: "var(--border)" }}
         >
           {NAV.map((l) => (
