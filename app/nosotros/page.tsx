@@ -54,7 +54,7 @@ export default function NosotrosPage() {
         <CircuitBackground />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="hero-enter max-w-2xl">
-            <p className="text-xs font-semibold uppercase tracking-widest neon mb-4">Empresa</p>
+            <p className="section-badge mb-4">Empresa</p>
             <h1
               className="font-display font-bold text-4xl sm:text-5xl tracking-tight leading-tight mb-5"
               style={{ color: "var(--fg)" }}
@@ -94,7 +94,7 @@ export default function NosotrosPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="rounded-2xl p-8 reveal card-hover" style={{ backgroundColor: "var(--card)", border: "1px solid rgba(118,185,0,0.15)" }}>
-              <p className="text-xs font-semibold uppercase tracking-widest neon mb-3">Misión</p>
+              <p className="section-badge mb-3">Misión</p>
               <p className="text-sm leading-relaxed" style={{ color: "var(--fg-muted)" }}>
                 Ayudar a las PYMEs y MIPYMEs de Paraguay a digitalizarse de forma accesible, con
                 soluciones web y de automatización adaptadas a la realidad de cada negocio.
@@ -102,7 +102,7 @@ export default function NosotrosPage() {
             </div>
 
             <div className="rounded-2xl p-8 reveal reveal-1 card-hover" style={{ backgroundColor: "var(--card)", border: "1px solid rgba(118,185,0,0.15)" }}>
-              <p className="text-xs font-semibold uppercase tracking-widest neon mb-3">Visión</p>
+              <p className="section-badge mb-3">Visión</p>
               <p className="text-sm leading-relaxed" style={{ color: "var(--fg-muted)" }}>
                 Ser un referente de confianza en desarrollo web y automatización para pequeñas y
                 medianas empresas paraguayas, reconocidos por nuestra transparencia, cercanía y
@@ -119,7 +119,7 @@ export default function NosotrosPage() {
       <section className="section">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="reveal mb-12">
-            <p className="text-xs font-semibold uppercase tracking-widest neon mb-3">Valores</p>
+            <p className="section-badge mb-3">Valores</p>
             <h2
               className="font-display font-bold text-3xl sm:text-4xl tracking-tight"
               style={{ color: "var(--fg)" }}
@@ -179,7 +179,7 @@ export default function NosotrosPage() {
       <section className="section bg-alt">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="reveal mb-10">
-            <p className="text-xs font-semibold uppercase tracking-widest neon mb-3">Diferenciales</p>
+            <p className="section-badge mb-3">Diferenciales</p>
             <h2
               className="font-display font-bold text-3xl sm:text-4xl tracking-tight"
               style={{ color: "var(--fg)" }}

@@ -41,7 +41,7 @@ export default function ServiciosPage() {
         <CircuitBackground />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="hero-enter max-w-2xl">
-            <p className="text-xs font-semibold uppercase tracking-widest neon mb-4">Servicios</p>
+            <p className="section-badge mb-4">Servicios</p>
             <h1
               className="font-display font-bold text-4xl sm:text-5xl tracking-tight leading-tight mb-5"
               style={{ color: "var(--fg)" }}
@@ -60,7 +60,7 @@ export default function ServiciosPage() {
       <section className="section">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-12">
-            <p className="text-xs font-semibold uppercase tracking-widest neon mb-3"></p>
+
             <h2
               className="font-display font-bold text-3xl sm:text-4xl tracking-tight mb-3"
               style={{ color: "var(--fg)" }}
@@ -82,7 +82,7 @@ export default function ServiciosPage() {
       <section id="proceso" className="section bg-alt">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="reveal mb-14">
-            <p className="text-xs font-semibold uppercase tracking-widest neon mb-3">Metodología</p>
+            <p className="section-badge mb-3">Metodología</p>
             <h2
               className="font-display font-bold text-3xl sm:text-4xl tracking-tight"
               style={{ color: "var(--fg)" }}
