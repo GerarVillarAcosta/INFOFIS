@@ -103,7 +103,7 @@ export default function Home() {
                   <ArrowRight size={16} />
                 </Link>
                 <a
-                  href="https://wa.me/595XXXXXXXXX"
+                  href="https://wa.me/595972767816?text=Hola%2C%20me%20interesa%20solicitar%20informaci%C3%B3n%20sobre%20sus%20servicios."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn btn-outline px-6 py-3 text-sm rounded-md"
