@@ -131,6 +131,23 @@ h1, h2, h3, h4, h5, h6, .font-display {
 .muted  { color: var(--fg-muted); }
 .bg-alt { background-color: var(--card); }
 
+.section-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(118, 185, 0, 0.5);
+  background: rgba(255, 255, 255, 0.85);
+  color: #76b900;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.dark .section-badge {
+  background: rgba(118, 185, 0, 0.15);
+}
+
 .divider { border-top: 1px solid var(--border); }
 
 .section {

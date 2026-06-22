@@ -158,7 +158,7 @@ export default function PreciosPage() {
         <section className="relative z-10 section">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="hero-enter max-w-2xl">
-              <p className="text-xs font-semibold uppercase tracking-widest neon mb-4">Precios</p>
+              <p className="section-badge mb-4">Precios</p>
               <h1
                 className="font-display font-bold text-4xl sm:text-5xl tracking-tight leading-tight mb-5"
                 style={{ color: "var(--fg)" }}
@@ -573,7 +573,7 @@ export default function PreciosPage() {
       <section className="section bg-alt">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="reveal mb-10">
-            <p className="text-xs font-semibold uppercase tracking-widest neon mb-3">Pago</p>
+            <p className="section-badge mb-3">Pago</p>
             <h2
               className="font-display font-bold text-3xl sm:text-4xl tracking-tight"
               style={{ color: "var(--fg)" }}
@@ -621,7 +621,7 @@ export default function PreciosPage() {
       <section className="section">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="reveal mb-10">
-            <p className="text-xs font-semibold uppercase tracking-widest neon mb-3">FAQ</p>
+            <p className="section-badge mb-3">FAQ</p>
             <h2
               className="font-display font-bold text-3xl sm:text-4xl tracking-tight"
               style={{ color: "var(--fg)" }}

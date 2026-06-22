@@ -61,16 +61,7 @@ export default function Home() {
             {/* Left: headline + buttons */}
             <div className="space-y-8">
               <div className="hero-enter">
-                <span
-                  className="inline-block text-xs font-semibold tracking-widest uppercase mb-6"
-                  style={{
-                    color: "#76b900",
-                    background: "color-mix(in srgb, var(--bg) 75%, transparent)",
-                    border: "1px solid rgba(118,185,0,0.5)",
-                    padding: "4px 12px",
-                    borderRadius: "999px",
-                  }}
-                >
+                <span className="section-badge mb-6">
                   Desarrollo Web · Paraguay
                 </span>
                 <h1
@@ -156,7 +147,7 @@ export default function Home() {
       <section className="bg-alt pt-20 pb-10 md:pt-28 md:pb-14">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="reveal mb-14">
-            <p className="text-xs font-semibold uppercase tracking-widest neon mb-3">Servicios</p>
+            <p className="section-badge mb-3">Servicios</p>
             <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight" style={{ color: "var(--fg)" }}>
               Lo que hacemos
             </h2>
@@ -275,7 +266,7 @@ export default function Home() {
       <section className="bg-alt pt-10 pb-20 md:pt-14 md:pb-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="reveal mb-12">
-            <p className="text-xs font-semibold uppercase tracking-widest neon mb-3">Proceso</p>
+            <p className="section-badge mb-3">Proceso</p>
             <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight" style={{ color: "var(--fg)" }}>
               Cómo trabajamos
             </h2>
@@ -334,7 +325,7 @@ export default function Home() {
         <section className="section">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="reveal mb-12">
-              <p className="text-xs font-semibold uppercase tracking-widest neon mb-3">Testimonios</p>
+              <p className="section-badge mb-3">Testimonios</p>
               <h2 className="font-display font-bold text-3xl sm:text-4xl tracking-tight" style={{ color: "var(--fg)" }}>
                 Lo que dicen nuestros clientes
               </h2>

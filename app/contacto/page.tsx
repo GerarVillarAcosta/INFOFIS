@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Mail, MessageCircle, MapPin, ChevronDown, ArrowRight, CheckCircle, Loader2 } from "lucide-react";
 import CircuitBackground from "@/components/CircuitBackground";
 
-const WEB3FORMS_KEY = "YOUR_WEB3FORMS_ACCESS_KEY"; // TODO: reemplazar con tu clave de Web3Forms
+const WEB3FORMS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? "";
 
 const FAQS = [
   {
@@ -119,7 +119,7 @@ export default function ContactoPage() {
         <CircuitBackground />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="hero-enter max-w-2xl">
-            <p className="text-xs font-semibold uppercase tracking-widest neon mb-4">Contacto</p>
+            <p className="section-badge mb-4">Contacto</p>
             <h1
               className="font-display font-bold text-4xl sm:text-5xl tracking-tight leading-tight mb-5"
               style={{ color: "var(--fg)" }}
@@ -311,10 +311,10 @@ export default function ContactoPage() {
                   <li className="flex items-center gap-3 text-sm" style={{ color: "var(--fg-muted)" }}>
                     <Mail size={16} className="neon shrink-0" />
                     <a
-                      href="mailto:infofis@gmail.com.py"
+                      href="mailto:infooofis@gmail.com"
                       className="hover:text-[#76b900] transition-colors"
                     >
-                      infofis@gmail.com.py
+                      infooofis@gmail.com
                     </a>
                   </li>
                   <li className="flex items-center gap-3 text-sm" style={{ color: "var(--fg-muted)" }}>
@@ -350,13 +350,6 @@ export default function ContactoPage() {
                 </p>
               </div>
 
-              <div className="surface rounded-xl p-5">
-                <p className="text-xs font-semibold uppercase tracking-wider neon mb-2">Empresa</p>
-                <p className="text-sm" style={{ color: "var(--fg-muted)" }}>
-                  INFOFIS — Empresa unipersonal registrada en el SET.
-                  Emitimos factura legal por todos nuestros servicios.
-                </p>
-              </div>
             </div>
 
           </div>
@@ -369,7 +362,7 @@ export default function ContactoPage() {
       <section className="section bg-alt">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="reveal mb-10">
-            <p className="text-xs font-semibold uppercase tracking-widest neon mb-3">FAQ</p>
+            <p className="section-badge mb-3">FAQ</p>
             <h2
               className="font-display font-bold text-3xl sm:text-4xl tracking-tight"
               style={{ color: "var(--fg)" }}
