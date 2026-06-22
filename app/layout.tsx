@@ -33,6 +33,10 @@ export const metadata: Metadata = {
     "INFOFIS",
     "diseño web interior Paraguay",
   ],
+  icons: {
+    icon: "/imagenes/LOGO.png",
+    apple: "/imagenes/LOGO.png",
+  },
 };
 
 export default function RootLayout({
