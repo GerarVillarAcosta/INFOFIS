@@ -39,3 +39,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# internal agent/claude config — do not publish
+CLAUDE.md
+AGENTS.md
+
+# source/working images (not the deployed ones in public/)
+/imagenes/
