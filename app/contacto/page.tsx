@@ -311,15 +311,15 @@ export default function ContactoPage() {
                   <li className="flex items-center gap-3 text-sm" style={{ color: "var(--fg-muted)" }}>
                     <Mail size={16} className="neon shrink-0" />
                     <a
-                      href="mailto:contacto@infofis.com.py"
+                      href="mailto:infofis@gmail.com.py"
                       className="hover:text-[#76b900] transition-colors"
                     >
-                      contacto@infofis.com.py
+                      infofis@gmail.com.py
                     </a>
                   </li>
                   <li className="flex items-center gap-3 text-sm" style={{ color: "var(--fg-muted)" }}>
                     <MessageCircle size={16} className="neon shrink-0" />
-                    <span>+595 9XX XXX XXX</span>
+                    <span>+595 972 767 816</span>
                   </li>
                   <li className="flex items-start gap-3 text-sm" style={{ color: "var(--fg-muted)" }}>
                     <MapPin size={16} className="neon shrink-0 mt-0.5" />
@@ -328,7 +328,7 @@ export default function ContactoPage() {
                 </ul>
 
                 <Link
-                  href="https://wa.me/5959XXXXXXXX"
+                  href="https://wa.me/595972767816?text=Hola%2C%20me%20interesa%20solicitar%20informaci%C3%B3n%20sobre%20sus%20servicios."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn btn-outline px-5 py-2.5 text-sm rounded-md gap-2 mt-5 w-full justify-center"

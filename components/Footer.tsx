@@ -33,9 +33,6 @@ export function Footer() {
             <p className="text-sm leading-relaxed max-w-xs" style={{ color: "var(--fg-muted)" }}>
               Desarrollo web y automatización de procesos para PYMEs y MIPYMEs del interior de Paraguay.
             </p>
-            <p className="text-xs" style={{ color: "var(--fg-muted)" }}>
-              Empresa unipersonal — RUC en trámite
-            </p>
           </div>
 
           {/* Pages */}
@@ -66,19 +63,18 @@ export function Footer() {
             <ul className="space-y-3">
               <li className="flex items-center gap-2.5 text-sm" style={{ color: "var(--fg-muted)" }}>
                 <Phone size={15} className="neon shrink-0" />
-                <span>+595 XXX XXX XXX</span>
+                <span>+595 972 767 816</span>
               </li>
               <li className="flex items-center gap-2.5 text-sm" style={{ color: "var(--fg-muted)" }}>
                 <Mail size={15} className="neon shrink-0" />
-                <a href="mailto:contacto@infofis.com" className="hover:text-[#76b900] transition-colors">
-                  contacto@infofis.com
+                <a href="mailto:infofis@gmail.com.py" className="hover:text-[#76b900] transition-colors">
+                  infofis@gmail.com.py
                 </a>
               </li>
               <li className="flex items-start gap-2.5 text-sm" style={{ color: "var(--fg-muted)" }}>
                 <MapPin size={15} className="neon shrink-0 mt-0.5" />
                 <span>Interior de Paraguay</span>
               </li>
-
             </ul>
           </div>
         </div>

@@ -136,7 +136,7 @@ export default function Home() {
               <div className="hidden lg:grid grid-cols-3 gap-3">
                 {[
                   { label: "Entrega", value: "1–4 sem." },
-                  { label: "Desde",   value: "USD 299"  },
+                  { label: "Desde",   value: "USD 349"  },
                   { label: "Alcance", value: "Paraguay" },
                 ].map((stat) => (
                   <div key={stat.label} className="surface rounded-xl p-4 card-hover text-center">

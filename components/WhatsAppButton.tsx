@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { MessageCircle } from "lucide-react";
 
-const WA_NUMBER = "595XXXXXXXXX"; // TODO: reemplazar con número real
+const WA_NUMBER = "595972767816";
 const WA_MSG = "Hola, me interesa solicitar información sobre sus servicios.";
 
 export function WhatsAppButton() {
