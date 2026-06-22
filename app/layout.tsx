@@ -34,8 +34,8 @@ export const metadata: Metadata = {
     "diseño web interior Paraguay",
   ],
   icons: {
-    icon: "/imagenes/favicon.png",
-    apple: "/imagenes/favicon.png",
+    icon: "/app/Favicon.ico",
+    apple: "/app/Favicon.ico",
   },
 };
 
