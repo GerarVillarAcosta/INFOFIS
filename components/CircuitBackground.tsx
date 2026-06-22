@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useTheme } from "next-themes";
 
 interface Node {
   x: number;
@@ -41,8 +42,12 @@ function hexToRgb(hex: string): string {
 export default function CircuitBackground({ color = "#76b900" }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const rgb = hexToRgb(color);
+  const [mounted, setMounted] = useState(false);
+  const { resolvedTheme } = useTheme();
 
   useEffect(() => {
+    setMounted(true);
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         const nodes = containerRef.current?.querySelectorAll<HTMLElement>(".cb-node");
@@ -57,6 +62,28 @@ export default function CircuitBackground({ color = "#76b900" }: Props) {
     return () => observer.disconnect();
   }, []);
 
+  const isLight = mounted && resolvedTheme === "light";
+
+  // SVG opacities — higher in light mode so lines are legible on light bg
+  const diagOp   = isLight ? 0.30 : 0.18;
+  const gridOp   = isLight ? 0.18 : 0.10;
+  const pathOp   = isLight ? 0.38 : 0.22;
+  const dotOp    = isLight ? 0.55 : 0.35;
+  const cornerOp = isLight ? 0.40 : 0.25;
+
+  // Vignette adapts to bg
+  const vignetteGrad = isLight
+    ? "radial-gradient(ellipse at 50% 50%, transparent 30%, rgba(255,255,255,0.5) 100%)"
+    : "radial-gradient(ellipse at 50% 50%, transparent 30%, rgba(0,0,0,0.72) 100%)";
+
+  // Pulse max opacity — reduced in light mode to avoid overexposure
+  const pulseMax = isLight ? "0.18" : "0.32";
+
+  // Node glow — subtler in light mode
+  const nodeShadow = isLight
+    ? `0 0 6px 2px rgba(${rgb}, 0.4)`
+    : `0 0 8px 3px rgba(${rgb}, 0.7)`;
+
   return (
     <>
       <style>{`
@@ -69,7 +96,7 @@ export default function CircuitBackground({ color = "#76b900" }: Props) {
         }
         @keyframes cb-pulse {
           0% { opacity: 0.06; transform: scale(0.85); }
-          100% { opacity: 0.32; transform: scale(1.2); }
+          100% { opacity: var(--pulse-max, 0.32); transform: scale(1.2); }
         }
         .cb-node {
           position: absolute;
@@ -120,27 +147,27 @@ export default function CircuitBackground({ color = "#76b900" }: Props) {
               patternUnits="userSpaceOnUse"
             >
               <line x1="0" y1="0" x2="80" y2="80"
-                style={{ stroke: color, strokeWidth: 0.5, strokeOpacity: 0.18, transition: "stroke 400ms ease" }} />
+                style={{ stroke: color, strokeWidth: 0.5, strokeOpacity: diagOp, transition: "stroke 400ms ease" }} />
               <line x1="80" y1="0" x2="0" y2="80"
-                style={{ stroke: color, strokeWidth: 0.5, strokeOpacity: 0.18, transition: "stroke 400ms ease" }} />
+                style={{ stroke: color, strokeWidth: 0.5, strokeOpacity: diagOp, transition: "stroke 400ms ease" }} />
               <line x1="0" y1="40" x2="80" y2="40"
-                style={{ stroke: color, strokeWidth: 0.4, strokeOpacity: 0.10, transition: "stroke 400ms ease" }} />
+                style={{ stroke: color, strokeWidth: 0.4, strokeOpacity: gridOp, transition: "stroke 400ms ease" }} />
               <line x1="40" y1="0" x2="40" y2="80"
-                style={{ stroke: color, strokeWidth: 0.4, strokeOpacity: 0.10, transition: "stroke 400ms ease" }} />
+                style={{ stroke: color, strokeWidth: 0.4, strokeOpacity: gridOp, transition: "stroke 400ms ease" }} />
               <path d="M10 70 L10 50 L30 50"
-                style={{ stroke: color, strokeWidth: 0.6, strokeOpacity: 0.22, fill: "none", strokeLinecap: "round", transition: "stroke 400ms ease" }} />
+                style={{ stroke: color, strokeWidth: 0.6, strokeOpacity: pathOp, fill: "none", strokeLinecap: "round", transition: "stroke 400ms ease" }} />
               <path d="M70 10 L70 30 L50 30"
-                style={{ stroke: color, strokeWidth: 0.6, strokeOpacity: 0.22, fill: "none", strokeLinecap: "round", transition: "stroke 400ms ease" }} />
+                style={{ stroke: color, strokeWidth: 0.6, strokeOpacity: pathOp, fill: "none", strokeLinecap: "round", transition: "stroke 400ms ease" }} />
               <circle cx="40" cy="40" r="1.2"
-                style={{ fill: color, fillOpacity: 0.35, transition: "fill 400ms ease" }} />
+                style={{ fill: color, fillOpacity: dotOp, transition: "fill 400ms ease" }} />
               <circle cx="0"  cy="0"  r="1.0"
-                style={{ fill: color, fillOpacity: 0.25, transition: "fill 400ms ease" }} />
+                style={{ fill: color, fillOpacity: cornerOp, transition: "fill 400ms ease" }} />
               <circle cx="80" cy="80" r="1.0"
-                style={{ fill: color, fillOpacity: 0.25, transition: "fill 400ms ease" }} />
+                style={{ fill: color, fillOpacity: cornerOp, transition: "fill 400ms ease" }} />
               <circle cx="80" cy="0"  r="1.0"
-                style={{ fill: color, fillOpacity: 0.25, transition: "fill 400ms ease" }} />
+                style={{ fill: color, fillOpacity: cornerOp, transition: "fill 400ms ease" }} />
               <circle cx="0"  cy="80" r="1.0"
-                style={{ fill: color, fillOpacity: 0.25, transition: "fill 400ms ease" }} />
+                style={{ fill: color, fillOpacity: cornerOp, transition: "fill 400ms ease" }} />
             </pattern>
           </defs>
           <rect width="100%" height="100%" fill="url(#circuit-tile)" />
@@ -151,7 +178,7 @@ export default function CircuitBackground({ color = "#76b900" }: Props) {
           style={{
             position: "absolute",
             inset: 0,
-            background: "radial-gradient(ellipse at 50% 50%, transparent 30%, rgba(0,0,0,0.72) 100%)",
+            background: vignetteGrad,
             pointerEvents: "none",
           }}
         />
@@ -160,6 +187,7 @@ export default function CircuitBackground({ color = "#76b900" }: Props) {
         <div
           className="cb-pulse"
           style={{
+            ["--pulse-max" as string]: pulseMax,
             background: `radial-gradient(ellipse at 50% 45%, rgba(${rgb}, 0.55) 0%, transparent 55%)`,
           }}
         />
@@ -178,7 +206,7 @@ export default function CircuitBackground({ color = "#76b900" }: Props) {
               ["--delay" as string]: `${n.delay}s`,
               opacity: n.opacity,
               background: color,
-              boxShadow: `0 0 8px 3px rgba(${rgb}, 0.7)`,
+              boxShadow: nodeShadow,
             }}
           />
         ))}
