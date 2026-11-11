@@ -7,7 +7,7 @@ import ServiceTabs from "@/components/ServiceTabs";
 export const metadata: Metadata = {
   title: "Servicios",
   description:
-    "Conocé en detalle todos los servicios de INFOFIS: sitios rápidos, sitios completos y automatización de procesos para PYMEs del interior de Paraguay.",
+    "Conocé en detalle todos los servicios de INFOFIS: sitios rápidos, sitios completos y automatización de procesos para PYMEs y MIPYMEs de Latinoamérica.",
 };
 
 const STEPS = [
@@ -115,7 +115,7 @@ export default function ServiciosPage() {
                   <p className="font-display font-semibold text-lg mb-2" style={{ color: "var(--fg)" }}>
                     {s.title}
                   </p>
-                  <p className="text-sm leading-relaxed" style={{ color: "#a0a0a0" }}>
+                  <p className="text-sm leading-relaxed" style={{ color: "var(--fg-muted)" }}>
                     {s.desc}
                   </p>
                 </div>

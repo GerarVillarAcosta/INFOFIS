@@ -1,8 +1,17 @@
 import Link from "next/link";
-import Image from "next/image";
-import { Phone, Mail, MapPin } from "lucide-react";
+import { LEGAL } from "@/lib/legal";
 
-const PAGES = [
+interface FooterLink {
+  href: string;
+  label: string;
+}
+
+interface FooterColumnProps {
+  title: string;
+  links: FooterLink[];
+}
+
+const NAV_LINKS: FooterLink[] = [
   { href: "/", label: "Inicio" },
   { href: "/servicios", label: "Servicios" },
   { href: "/nosotros", label: "Nosotros" },
@@ -11,80 +20,59 @@ const PAGES = [
   { href: "/contacto", label: "Contacto" },
 ];
 
-export function Footer() {
+function FooterColumn({ title, links }: FooterColumnProps) {
   return (
-    <footer
-      className="border-t"
-      style={{ borderColor: "var(--border)", backgroundColor: "var(--card)" }}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-          {/* Brand */}
-          <div className="space-y-4">
-            <Link href="/" className="inline-flex items-center">
-              <Image
-                src="/imagenes/LOGO.png"
-                alt="INFOFIS"
-                width={120}
-                height={36}
-                className="h-8 w-auto"
-              />
+    <div>
+      <h3 className="text-xs font-semibold uppercase tracking-[0.2em] text-[#5a8a00] dark:text-[#76b900]">
+        {title}
+      </h3>
+      <ul className="mt-4 space-y-2.5">
+        {links.map((link) => (
+          <li key={link.href}>
+            <Link
+              href={link.href}
+              className="text-sm text-neutral-600 transition hover:text-[#5a8a00] dark:text-neutral-400 dark:hover:text-[#76b900]"
+            >
+              {link.label}
             </Link>
-            <p className="text-sm leading-relaxed max-w-xs" style={{ color: "var(--fg-muted)" }}>
-              Desarrollo web y automatización de procesos para PYMEs y MIPYMEs de todo el país.
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default function Footer() {
+  const { contact } = LEGAL;
+  const year = new Date().getFullYear();
+
+  return (
+    <footer className="border-t border-neutral-200 bg-neutral-50 dark:border-neutral-800 dark:bg-neutral-950">
+      <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="lg:col-span-2">
+            <p className="text-lg font-bold tracking-wider text-neutral-900 dark:text-white">
+              {LEGAL.brand}
             </p>
+            <p className="mt-3 max-w-sm text-sm leading-relaxed text-neutral-600 dark:text-neutral-400">
+              Landing pages, catálogos online y automatización de procesos
+              para MiPyMEs de Latinoamérica.
+            </p>
+            <div className="mt-4 space-y-1 text-sm">
+              <a
+                href={`mailto:${contact.email}`}
+                className="block text-neutral-600 hover:text-[#5a8a00] dark:text-neutral-400 dark:hover:text-[#76b900]"
+              >
+                {contact.email}
+              </a>
+            </div>
           </div>
 
-          {/* Pages */}
-          <div>
-            <p className="font-display font-semibold text-sm mb-5 tracking-wide uppercase" style={{ color: "var(--fg)" }}>
-              Páginas
-            </p>
-            <ul className="space-y-2.5">
-              {PAGES.map((p) => (
-                <li key={p.href}>
-                  <Link
-                    href={p.href}
-                    className="text-sm transition-colors duration-150 hover:text-[#76b900]"
-                    style={{ color: "var(--fg-muted)" }}
-                  >
-                    {p.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Contact */}
-          <div>
-            <p className="font-display font-semibold text-sm mb-5 tracking-wide uppercase" style={{ color: "var(--fg)" }}>
-              Contacto
-            </p>
-            <ul className="space-y-3">
-              <li className="flex items-center gap-2.5 text-sm" style={{ color: "var(--fg-muted)" }}>
-                <Phone size={15} className="neon shrink-0" />
-                <span>[REDACTADO]</span>
-              </li>
-              <li className="flex items-center gap-2.5 text-sm" style={{ color: "var(--fg-muted)" }}>
-                <Mail size={15} className="neon shrink-0" />
-                <a href="mailto:infooofis@gmail.com" className="hover:text-[#76b900] transition-colors">
-                  infooofis@gmail.com
-                </a>
-              </li>
-              <li className="flex items-start gap-2.5 text-sm" style={{ color: "var(--fg-muted)" }}>
-                <MapPin size={15} className="neon shrink-0 mt-0.5" />
-                <span>Interior de Paraguay</span>
-              </li>
-            </ul>
-          </div>
+          <FooterColumn title="Navegación" links={NAV_LINKS} />
         </div>
 
-        <div
-          className="mt-12 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 border-t text-xs"
-          style={{ borderColor: "var(--border)", color: "var(--fg-muted)" }}
-        >
-          <span>© {new Date().getFullYear()} INFOFIS. Todos los derechos reservados.</span>
-          <span>Empresa unipersonal — Servicio remoto a todo Paraguay</span>
+        <div className="mt-10 border-t border-neutral-200 pt-6 text-xs text-neutral-500 dark:border-neutral-800">
+          © {year} {LEGAL.brand}. Todos los derechos reservados.
         </div>
       </div>
     </footer>

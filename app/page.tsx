@@ -6,29 +6,7 @@ import {
   Globe,
   Settings,
   ArrowRight,
-  CheckCircle,
 } from "lucide-react";
-
-const SERVICES = [
-  {
-    icon: Zap,
-    title: "Landing Pages / Páginas de Información",
-    desc: "Sitios informativos de una o varias páginas para presentar tu negocio: quiénes son, qué ofrecen, su equipo, ubicación y datos de contacto.",
-    href: "/servicios#rapidos",
-  },
-  {
-    icon: Globe,
-    title: "Catálogos y Tiendas Online",
-    desc: "Sitios con varias secciones para mostrar tu catálogo completo de productos, con opción de venta online.",
-    href: "/servicios#completos",
-  },
-  {
-    icon: Settings,
-    title: "Automatización de Procesos",
-    desc: "Identificamos tareas repetitivas en tu negocio y las automatizamos para ahorrarte tiempo y reducir costos operativos.",
-    href: "/servicios#automatizacion",
-  },
-];
 
 const STEPS = [
   { n: "01", title: "Briefing",   desc: "Levantamiento de información sobre tu negocio.", img: "/imagenes/step-1.jpeg" },
@@ -62,7 +40,7 @@ export default function Home() {
             <div className="space-y-8">
               <div className="hero-enter">
                 <span className="section-badge mb-6">
-                  Desarrollo Web · Paraguay
+                  Desarrollo Web · Latinoamérica
                 </span>
                 <h1
                   className="font-display font-bold text-4xl sm:text-5xl xl:text-6xl tracking-tight leading-[1.08]"
@@ -80,7 +58,7 @@ export default function Home() {
                 className="hero-enter-1 text-base sm:text-lg leading-relaxed max-w-xl"
                 style={{ color: "var(--fg-muted)" }}
               >
-                Ayudamos a PYMEs y MIPYMEs de Paraguay a tener presencia digital
+                Ayudamos a PYMEs y MIPYMEs de toda Latinoamérica a tener presencia digital
                 profesional y procesos más eficientes, sin importar dónde estén —
                 trabajamos 100% de forma remota.
               </p>
@@ -93,14 +71,6 @@ export default function Home() {
                   Solicitar presupuesto
                   <ArrowRight size={16} />
                 </Link>
-                <a
-                  href="https://wa.me/[REDACTADO]?text=Hola%2C%20me%20interesa%20solicitar%20informaci%C3%B3n%20sobre%20sus%20servicios."
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn-outline px-6 py-3 text-sm rounded-md"
-                >
-                  Hablar por WhatsApp
-                </a>
               </div>
             </div>
 
@@ -126,9 +96,9 @@ export default function Home() {
               {/* Stats — desktop only */}
               <div className="hidden lg:grid grid-cols-3 gap-3">
                 {[
-                  { label: "Entrega", value: "1–4 sem." },
-                  { label: "Desde",   value: "USD 349"  },
-                  { label: "Alcance", value: "Paraguay" },
+                  { label: "Entrega", value: "4–6 sem." },
+                  { label: "Desde",   value: "USD 250"  },
+                  { label: "Alcance", value: "Latam"    },
                 ].map((stat) => (
                   <div key={stat.label} className="surface rounded-xl p-4 card-hover text-center">
                     <p className="text-xs uppercase tracking-wider mb-1" style={{ color: "var(--fg-muted)" }}>
@@ -183,7 +153,7 @@ export default function Home() {
                   </p>
                 </div>
                 <Link
-                  href="/servicios#rapidos"
+                  href="/servicios"
                   className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold neon hover:gap-2.5 transition-all duration-200"
                 >
                   Conocer más <ArrowRight size={14} />
@@ -217,7 +187,7 @@ export default function Home() {
                   </p>
                 </div>
                 <Link
-                  href="/servicios#completos"
+                  href="/servicios"
                   className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold neon hover:gap-2.5 transition-all duration-200"
                 >
                   Conocer más <ArrowRight size={14} />
@@ -251,7 +221,7 @@ export default function Home() {
                   </p>
                 </div>
                 <Link
-                  href="/servicios#automatizacion"
+                  href="/servicios"
                   className="mt-6 inline-flex items-center gap-1.5 text-sm font-semibold neon hover:gap-2.5 transition-all duration-200"
                 >
                   Conocer más <ArrowRight size={14} />
@@ -283,7 +253,7 @@ export default function Home() {
                 <div className="relative w-full aspect-video">
                   <Image
                     src={s.img}
-                    alt={s.title}
+                    alt=""
                     fill
                     className="object-cover"
                   />

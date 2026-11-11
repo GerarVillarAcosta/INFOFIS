@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useTheme } from "next-themes";
+import { useMounted } from "@/lib/useMounted";
 
 interface Node {
   x: number;
@@ -42,12 +43,10 @@ function hexToRgb(hex: string): string {
 export default function CircuitBackground({ color = "#76b900" }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const rgb = hexToRgb(color);
-  const [mounted, setMounted] = useState(false);
+  const mounted = useMounted();
   const { resolvedTheme } = useTheme();
 
   useEffect(() => {
-    setMounted(true);
-
     const observer = new IntersectionObserver(
       ([entry]) => {
         const nodes = containerRef.current?.querySelectorAll<HTMLElement>(".cb-node");

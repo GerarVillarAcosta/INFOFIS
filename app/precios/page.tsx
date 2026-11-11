@@ -1,11 +1,17 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
+// import { useEffect } from "react"; // TODO: solo lo usa la conversión PYG (deshabilitada)
 import Link from "next/link";
-import { ArrowRight, CheckCircle, Check, ChevronDown, Info } from "lucide-react";
+import { ArrowRight, CheckCircle, Check, ChevronDown, Info, Minus, Plus } from "lucide-react";
 import CircuitBackground from "@/components/CircuitBackground";
 
-const FALLBACK_RATE = 7500; // ya es múltiplo de 100
+// TODO: PYG conversion deshabilitada temporalmente.
+// La API de cotización (open.er-api.com) estaba operativa pero se desactiva
+// para simplificar la propuesta de precios. Reactivar cuando sea relevante
+// para el mercado paraguayo local. El endpoint era:
+// https://open.er-api.com/v6/latest/USD
+// const FALLBACK_RATE = 7500; // ya es múltiplo de 100
 
 const PLAN_COLORS: Record<string, string> = {
   landing: "#f5c400",
@@ -15,7 +21,7 @@ const PLAN_COLORS: Record<string, string> = {
 
 const LANDING_INCLUDES = [
   "Diseño personalizado",
-  "Hasta 5 secciones",
+  "Hasta 5 secciones en una sola URL (scroll)",
   "Formulario de contacto",
   "Integración de WhatsApp",
   "Diseño responsive",
@@ -64,12 +70,13 @@ const AUTO_INCLUDES = [
 const FAQS = [
   {
     q: "¿Por qué los precios están en dólares?",
-    a: "Trabajamos con USD como moneda base porque nos permite mantener precios estables independientemente de las fluctuaciones del mercado cambiario. El equivalente en guaraníes es referencial y se actualiza automáticamente con la cotización del día.",
+    a: "Trabajamos con USD como moneda base porque nos permite mantener precios estables y comparables para clientes de toda Latinoamérica, independientemente de las fluctuaciones del mercado cambiario.",
   },
-  {
-    q: "¿Cómo se calcula el monto en guaraníes?",
-    a: "Tomamos la cotización actual del dólar, la redondeamos hacia arriba al múltiplo de Gs. 100 más cercano, y la multiplicamos por el precio en USD. El monto final puede variar al momento de la facturación según el tipo de cambio vigente.",
-  },
+  // TODO: PYG conversion deshabilitada — reactivar junto con la conversión a guaraníes.
+  // {
+  //   q: "¿Cómo se calcula el monto en guaraníes?",
+  //   a: "Tomamos la cotización actual del dólar, la redondeamos hacia arriba al múltiplo de Gs. 100 más cercano, y la multiplicamos por el precio en USD. El monto final puede variar al momento de la facturación según el tipo de cambio vigente.",
+  // },
   {
     q: "¿Qué pasa si necesito algo que no está en los planes?",
     a: "Los planes son una referencia. Si tu proyecto tiene necesidades específicas, podemos armar un presupuesto a medida. Contactanos y lo conversamos.",
@@ -84,59 +91,69 @@ const FAQS = [
   },
 ];
 
-function redondearTasa(tasa: number) {
-  return Math.ceil(tasa / 100) * 100;
-}
-
-function redondearPYG(monto: number) {
-  return Math.round(monto);
-}
-
-function formatPYG(n: number) {
-  return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-}
+// TODO: PYG conversion deshabilitada temporalmente (ver nota arriba).
+// function redondearTasa(tasa: number) {
+//   return Math.ceil(tasa / 100) * 100;
+// }
+//
+// function redondearPYG(monto: number) {
+//   return Math.round(monto);
+// }
+//
+// function formatPYG(n: number) {
+//   return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+// }
 
 export default function PreciosPage() {
-  const [rate, setRate] = useState<number>(FALLBACK_RATE);
-  const [rateFallback, setRateFallback] = useState(false);
-  const [rateLoaded, setRateLoaded] = useState(false);
+  // TODO: PYG conversion deshabilitada temporalmente.
+  // La API de cotización (open.er-api.com) estaba operativa pero se desactiva
+  // para simplificar la propuesta de precios. Reactivar cuando sea relevante
+  // para el mercado paraguayo local. El endpoint era:
+  // https://open.er-api.com/v6/latest/USD
+  // const [rate, setRate] = useState<number>(FALLBACK_RATE);
+  // const [rateFallback, setRateFallback] = useState(false);
+  // const [rateLoaded, setRateLoaded] = useState(false);
   const [hoveredPlan, setHoveredPlan] = useState<string | null>(null);
   const [extras, setExtras] = useState({
     tienda: false, blog: false, chatbot: false,
     hostingLanding: false, hostingCatalogos: false,
   });
+  const [extraPages, setExtraPages] = useState(0);
   const [openExtra, setOpenExtra] = useState<string | null>(null);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
-  useEffect(() => {
-    fetch("https://open.er-api.com/v6/latest/USD")
-      .then((r) => r.json())
-      .then((data) => {
-        const pyg = data?.rates?.PYG;
-        if (typeof pyg === "number") {
-          setRate(redondearTasa(pyg));
-        } else {
-          setRateFallback(true);
-        }
-        setRateLoaded(true);
-      })
-      .catch(() => {
-        setRateFallback(true);
-        setRateLoaded(true);
-      });
-  }, []);
-
-  function pygStr(usd: number) {
-    return `≈ Gs. ${formatPYG(redondearPYG(usd * rate))}`;
-  }
+  // TODO: PYG conversion deshabilitada (fetch a open.er-api.com).
+  // useEffect(() => {
+  //   fetch("https://open.er-api.com/v6/latest/USD")
+  //     .then((r) => r.json())
+  //     .then((data) => {
+  //       const pyg = data?.rates?.PYG;
+  //       if (typeof pyg === "number") {
+  //         setRate(redondearTasa(pyg));
+  //       } else {
+  //         setRateFallback(true);
+  //       }
+  //       setRateLoaded(true);
+  //     })
+  //     .catch(() => {
+  //       setRateFallback(true);
+  //       setRateLoaded(true);
+  //     });
+  // }, []);
+  //
+  // function pygStr(usd: number) {
+  //   return `≈ Gs. ${formatPYG(redondearPYG(usd * rate))}`;
+  // }
 
   const heroColor = hoveredPlan ? PLAN_COLORS[hoveredPlan] : "#76b900";
 
   const extrasMarked = EXTRAS_LIST.reduce((n, e) => n + (extras[e.key] ? 1 : 0), 0);
   const extrasTotal = EXTRAS_LIST.reduce((sum, e) => sum + (extras[e.key] ? e.price : 0), 0);
 
-  const landingBase = 349;
-  const landingTotal = landingBase + (extras.hostingLanding ? 20 : 0);
+  const landingBase = 250;
+  const extraPagePrice = 40;
+  const landingTotal =
+    landingBase + extraPages * extraPagePrice + (extras.hostingLanding ? 20 : 0);
 
   const catalogBase = 599;
   const hostingCatalogosPrice = 35 + extrasMarked * 5;
@@ -166,8 +183,8 @@ export default function PreciosPage() {
                 Planes y precios
               </h1>
               <p className="text-base leading-relaxed" style={{ color: "var(--fg-muted)" }}>
-                Sin sorpresas ni letra chica. Precios en USD con equivalente en guaraníes
-                actualizado automáticamente.
+                Sin sorpresas ni letra chica. Precios en USD para clientes de toda
+                Latinoamérica.
               </p>
             </div>
           </div>
@@ -176,13 +193,14 @@ export default function PreciosPage() {
         {/* Plan cards */}
         <section className="relative z-10 section" style={{ paddingTop: 0 }}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Currency note */}
+          {/* TODO: PYG conversion deshabilitada — nota de cotización oculta
           {rateLoaded && (
             <p className="text-xs text-center mb-10" style={{ color: "var(--fg-muted)" }}>
               Cotización referencial · 1 USD = Gs. {formatPYG(rate)}
               {rateFallback ? " (cotización aproximada)" : " · Actualizada automáticamente"}
             </p>
           )}
+          */}
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
             {/* ─── Plan 1: Landing ─────────────────────────── */}
@@ -203,12 +221,12 @@ export default function PreciosPage() {
                 >
                   Landing Pages
                 </p>
-                <h3
+                <h2
                   className="font-display font-bold text-xl mb-2"
                   style={{ color: "var(--fg)" }}
                 >
                   Páginas de Información
-                </h3>
+                </h2>
                 <p className="text-sm" style={{ color: "var(--fg-muted)" }}>
                   Sitio informativo para presentar tu negocio de forma profesional.
                 </p>
@@ -218,9 +236,11 @@ export default function PreciosPage() {
                 <p className="font-display font-bold text-3xl" style={{ color: "var(--fg)" }}>
                   USD {landingTotal}
                 </p>
+                {/* TODO: PYG conversion deshabilitada
                 <p className="text-sm mt-1" style={{ color: "var(--fg-muted)" }}>
                   {pygStr(landingTotal)}
                 </p>
+                */}
               </div>
 
               <ul className="space-y-2.5 flex-1">
@@ -248,6 +268,69 @@ export default function PreciosPage() {
                 >
                   Adicionales opcionales
                 </p>
+
+                {/* Páginas adicionales — contador */}
+                <div className="py-3" style={{ borderBottom: "1px solid var(--border)" }}>
+                  {/* Mobile: fila 1 = contador + precio, fila 2 = texto. ≥sm: una sola fila */}
+                  <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1 sm:flex-nowrap">
+                    <div className="order-1 flex items-center shrink-0 -ml-2">
+                      {/* Botones con área de toque 44×44; el recuadro visible es más chico */}
+                      <button
+                        type="button"
+                        onClick={() => setExtraPages((n) => Math.max(0, n - 1))}
+                        disabled={extraPages === 0}
+                        aria-label="Quitar una página adicional"
+                        className="w-11 h-11 flex items-center justify-center cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+                        style={{ color: "var(--fg)" }}
+                      >
+                        <span
+                          className="w-7 h-7 rounded flex items-center justify-center"
+                          style={{ border: "1.5px solid var(--border)" }}
+                        >
+                          <Minus size={13} />
+                        </span>
+                      </button>
+                      <span
+                        className="w-8 text-center text-sm font-semibold tabular-nums"
+                        style={{ color: "var(--fg)" }}
+                        aria-live="polite"
+                      >
+                        {extraPages}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => setExtraPages((n) => n + 1)}
+                        aria-label="Agregar una página adicional"
+                        className="w-11 h-11 flex items-center justify-center cursor-pointer"
+                        style={{ color: "var(--fg)" }}
+                      >
+                        <span
+                          className="w-7 h-7 rounded flex items-center justify-center"
+                          style={{ border: "1.5px solid var(--border)" }}
+                        >
+                          <Plus size={13} />
+                        </span>
+                      </button>
+                    </div>
+                    <span
+                      className="order-2 sm:order-3 text-sm font-semibold shrink-0 whitespace-nowrap transition-colors duration-300"
+                      style={{ color: accent("landing") }}
+                    >
+                      USD {extraPagePrice} c/u
+                    </span>
+                    <span
+                      className="order-3 sm:order-2 w-full sm:w-auto sm:flex-1 min-w-0 text-sm"
+                      style={{ color: "var(--fg)" }}
+                    >
+                      Páginas adicionales con URL propia
+                    </span>
+                  </div>
+                  <p className="text-sm mt-3" style={{ color: "var(--fg-muted)" }}>
+                    La landing incluye hasta 5 secciones en una sola URL con scroll. Las páginas
+                    adicionales tienen su propia URL (ej: /equipo, /galeria, /faq).
+                  </p>
+                </div>
+
                 <label className="flex items-center gap-3 cursor-pointer">
                   <input
                     type="checkbox"
@@ -300,12 +383,12 @@ export default function PreciosPage() {
                 >
                   Catálogos y Tiendas
                 </p>
-                <h3
+                <h2
                   className="font-display font-bold text-xl mb-2"
                   style={{ color: "var(--fg)" }}
                 >
                   Catálogos y Tiendas Online
-                </h3>
+                </h2>
                 <p className="text-sm" style={{ color: "var(--fg-muted)" }}>
                   WordPress + WooCommerce para mostrar y vender tus productos online.
                 </p>
@@ -315,9 +398,11 @@ export default function PreciosPage() {
                 <p className="font-display font-bold text-3xl" style={{ color: "var(--fg)" }}>
                   {catalogLabel}
                 </p>
+                {/* TODO: PYG conversion deshabilitada
                 <p className="text-sm mt-1" style={{ color: "var(--fg-muted)" }}>
                   {pygStr(catalogTotal)}
                 </p>
+                */}
               </div>
 
               {/* Qué incluye */}
@@ -374,6 +459,8 @@ export default function PreciosPage() {
                         onClick={() => setOpenExtra(openExtra === extra.key ? null : extra.key)}
                         className="shrink-0 p-0.5"
                         aria-label={`Más info sobre ${extra.label}`}
+                        aria-expanded={openExtra === extra.key}
+                        aria-controls={`extra-desc-${extra.key}`}
                       >
                         <Info
                           size={14}
@@ -391,6 +478,8 @@ export default function PreciosPage() {
                       </span>
                     </div>
                     <div
+                      id={`extra-desc-${extra.key}`}
+                      aria-hidden={openExtra !== extra.key}
                       style={{
                         maxHeight: openExtra === extra.key ? "120px" : "0",
                         overflow: "hidden",
@@ -399,7 +488,7 @@ export default function PreciosPage() {
                     >
                       <p
                         className="text-sm leading-relaxed"
-                        style={{ color: "#a0a0a0", padding: "0.5rem 0 0.5rem 1.75rem" }}
+                        style={{ color: "var(--fg-muted)", padding: "0.5rem 0 0.5rem 1.75rem" }}
                       >
                         {extra.desc}
                       </p>
@@ -472,12 +561,12 @@ export default function PreciosPage() {
                 >
                   Automatización
                 </p>
-                <h3
+                <h2
                   className="font-display font-bold text-xl mb-2"
                   style={{ color: "var(--fg)" }}
                 >
                   Automatización de Procesos
-                </h3>
+                </h2>
                 <p className="text-sm" style={{ color: "var(--fg-muted)" }}>
                   Cada automatización es una solución a medida. Analizamos tu negocio,
                   identificamos qué procesos se pueden automatizar y te presentamos una
@@ -506,9 +595,11 @@ export default function PreciosPage() {
                 <p className="font-display font-bold text-3xl" style={{ color: "var(--fg)" }}>
                   Desde USD 399
                 </p>
+                {/* TODO: PYG conversion deshabilitada
                 <p className="text-sm mt-1" style={{ color: "var(--fg-muted)" }}>
                   {pygStr(399)}
                 </p>
+                */}
                 <p className="text-xs italic mt-2" style={{ color: "var(--fg-muted)" }}>
                   El precio final depende del alcance y complejidad del proyecto.
                 </p>
@@ -525,8 +616,7 @@ export default function PreciosPage() {
           </div>
 
           <p className="mt-8 text-xs text-center" style={{ color: "var(--fg-muted)" }}>
-            Precios expresados en USD. El monto en guaraníes es referencial y puede variar según el
-            tipo de cambio vigente al momento de la facturación.
+            Precios expresados en USD.
           </p>
         </div>
         </section>
@@ -546,19 +636,19 @@ export default function PreciosPage() {
               padding: "1.5rem 2rem",
             }}
           >
-            <h3
+            <h2
               className="font-display font-bold text-xl mb-4"
               style={{ color: "var(--fg)" }}
             >
               Hosting
-            </h3>
+            </h2>
             <div className="space-y-3">
               <p className="text-base leading-relaxed" style={{ color: "var(--fg-muted)" }}>
                 Para que tu sitio esté disponible en internet necesita un hosting. En INFOFIS te
                 asesoramos en la elección y la configuración inicial queda incluida en el
                 desarrollo. Si ya contás con uno propio, trabajamos sobre él sin problema.
               </p>
-              <p className="text-sm italic leading-relaxed" style={{ color: "#a0a0a0" }}>
+              <p className="text-sm italic leading-relaxed" style={{ color: "var(--fg-muted)" }}>
                 El hosting tiene un costo mensual o anual independiente al del desarrollo. Su
                 contratación es opcional y a cargo del cliente.
               </p>
@@ -617,6 +707,42 @@ export default function PreciosPage() {
 
       <div className="divider" />
 
+      {/* Pago online — dLocal Go (próximamente) */}
+      <section className="section">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* TODO: Integrar dLocal Go cuando se cree la cuenta en https://dlocalgo.com
+              - Registrarse como merchant en dLocal Go
+              - Obtener API Key y Secret
+              - Integrar el SDK o el checkout de dLocal Go para procesar pagos
+              - Habilitar este botón y conectarlo al checkout */}
+          <div
+            className="reveal rounded-2xl p-8 text-center"
+            style={{ border: "1px dashed rgba(118,185,0,0.4)" }}
+          >
+            <p className="text-xs uppercase tracking-widest mb-2" style={{ color: "var(--fg-muted)" }}>
+              Próximamente
+            </p>
+            <h2 className="font-display font-bold text-xl mb-3" style={{ color: "var(--fg)" }}>
+              Pagá online desde cualquier país de Latinoamérica
+            </h2>
+            <p className="text-sm leading-relaxed mb-6" style={{ color: "var(--fg-muted)" }}>
+              Estamos integrando <strong style={{ color: "var(--fg)" }}>dLocal Go</strong> para
+              aceptar tarjetas locales, transferencias y billeteras digitales de toda la región.
+            </p>
+            <button
+              type="button"
+              disabled
+              aria-disabled="true"
+              className="btn btn-neon px-6 py-2.5 text-sm rounded-md cursor-not-allowed opacity-50"
+            >
+              Pagar online (próximamente)
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <div className="divider" />
+
       {/* FAQ */}
       <section className="section">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -634,7 +760,10 @@ export default function PreciosPage() {
             {FAQS.map((faq, i) => (
               <div key={i}>
                 <button
+                  type="button"
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                  aria-expanded={openFaq === i}
+                  aria-controls={`faq-panel-${i}`}
                   className="w-full flex items-center justify-between gap-4 py-4 text-left cursor-pointer"
                 >
                   <span
@@ -653,6 +782,8 @@ export default function PreciosPage() {
                   />
                 </button>
                 <div
+                  id={`faq-panel-${i}`}
+                  aria-hidden={openFaq !== i}
                   style={{
                     maxHeight: openFaq === i ? "400px" : "0",
                     overflow: "hidden",

@@ -127,7 +127,9 @@ h1, h2, h3, h4, h5, h6, .font-display {
   .reveal-3 { animation-delay: 0.21s; }
 }
 
-.neon   { color: #76b900; }
+/* Verde de texto: en modo claro se oscurece para cumplir contraste WCAG AA (≥4.5:1) */
+.neon   { color: #5a8a00; }
+.dark .neon { color: #76b900; }
 .muted  { color: var(--fg-muted); }
 .bg-alt { background-color: var(--card); }
 
@@ -137,7 +139,7 @@ h1, h2, h3, h4, h5, h6, .font-display {
   border-radius: 999px;
   border: 1px solid rgba(118, 185, 0, 0.5);
   background: rgba(255, 255, 255, 0.85);
-  color: #76b900;
+  color: #5a8a00;
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.1em;
@@ -146,6 +148,20 @@ h1, h2, h3, h4, h5, h6, .font-display {
 
 .dark .section-badge {
   background: rgba(118, 185, 0, 0.15);
+  color: #76b900;
+}
+
+/* Foco visible para navegación por teclado */
+:focus-visible {
+  outline: 2px solid #76b900;
+  outline-offset: 2px;
+}
+
+/* Checkboxes personalizados (input sr-only dentro de <label>): resaltar el label al enfocarlo */
+label:has(> input.sr-only:focus-visible) {
+  outline: 2px solid #76b900;
+  outline-offset: 3px;
+  border-radius: 4px;
 }
 
 .divider { border-top: 1px solid var(--border); }

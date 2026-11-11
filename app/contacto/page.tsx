@@ -1,11 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
-import { Mail, MessageCircle, MapPin, ChevronDown, ArrowRight, CheckCircle, Loader2 } from "lucide-react";
+import { useId, useState } from "react";
+import { Mail, MapPin, ChevronDown, ArrowRight, CheckCircle, Loader2 } from "lucide-react";
 import CircuitBackground from "@/components/CircuitBackground";
-
-const WEB3FORMS_KEY = process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? "";
 
 const FAQS = [
   {
@@ -25,8 +22,8 @@ const FAQS = [
     a: "Un Landing Page es un sitio informativo para presentar tu negocio. Un Catálogo o Tienda Online te permite mostrar y, opcionalmente, vender tus productos directamente desde el sitio.",
   },
   {
-    q: "¿Atienden a negocios fuera de Asunción?",
-    a: "Sí, trabajamos de forma remota con negocios de todo el país, sin importar la ubicación.",
+    q: "¿Atienden a negocios de otros países?",
+    a: "Sí, trabajamos de forma remota con negocios de toda Latinoamérica, sin importar la ubicación.",
   },
   {
     q: "¿Qué incluye la automatización de procesos?",
@@ -36,24 +33,34 @@ const FAQS = [
 
 type FormState = "idle" | "loading" | "success" | "error";
 
-function FaqItem({ q, a }: { q: string; a: string }) {
+interface FaqItemProps {
+  q: string;
+  a: string;
+}
+
+function FaqItem({ q, a }: FaqItemProps) {
   const [open, setOpen] = useState(false);
+  const panelId = useId();
   return (
     <div className="surface rounded-xl overflow-hidden">
       <button
+        type="button"
         onClick={() => setOpen(!open)}
+        aria-expanded={open}
+        aria-controls={panelId}
         className="w-full flex items-center justify-between gap-4 px-6 py-4 text-left transition-colors hover:bg-[rgba(118,185,0,0.04)]"
         style={{ color: "var(--fg)" }}
       >
         <span className="font-display font-semibold text-sm">{q}</span>
         <ChevronDown
           size={16}
+          aria-hidden="true"
           className="neon shrink-0 transition-transform duration-200"
           style={{ transform: open ? "rotate(180deg)" : "none" }}
         />
       </button>
       {open && (
-        <div className="px-6 pb-5 divider pt-3">
+        <div id={panelId} className="px-6 pb-5 divider pt-3">
           <p className="text-sm leading-relaxed" style={{ color: "var(--fg-muted)" }}>
             {a}
           </p>
@@ -65,6 +72,7 @@ function FaqItem({ q, a }: { q: string; a: string }) {
 
 export default function ContactoPage() {
   const [formState, setFormState] = useState<FormState>("idle");
+  const [honeypot, setHoneypot] = useState("");
   const [formData, setFormData] = useState({
     nombre: "",
     empresa: "",
@@ -85,23 +93,14 @@ export default function ContactoPage() {
     setFormState("loading");
 
     try {
-      const res = await fetch("https://api.web3forms.com/submit", {
+      // La validación y el envío a Web3Forms ocurren en el servidor (app/api/contact).
+      const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          access_key: WEB3FORMS_KEY,
-          subject: `${formData.nombre} - Nuevo Contacto INFOFIS`,
-          from_name: "INFOFIS Website",
-          nombre: formData.nombre,
-          empresa: formData.empresa,
-          email: formData.email,
-          whatsapp: formData.whatsapp,
-          tipo_proyecto: formData.tipoProyecto,
-          mensaje: formData.mensaje,
-        }),
+        body: JSON.stringify({ ...formData, website: honeypot }),
       });
-      const data = await res.json();
-      if (data.success) {
+      const data = (await res.json()) as { success?: boolean };
+      if (res.ok && data.success) {
         setFormState("success");
         setFormData({ nombre: "", empresa: "", email: "", whatsapp: "", tipoProyecto: "", mensaje: "" });
       } else {
@@ -141,11 +140,11 @@ export default function ContactoPage() {
             {/* Form — wider column */}
             <div className="lg:col-span-3 reveal">
               {formState === "success" ? (
-                <div className="surface rounded-2xl p-10 text-center space-y-4">
-                  <CheckCircle size={36} className="neon mx-auto" />
-                  <h3 className="font-display font-bold text-xl" style={{ color: "var(--fg)" }}>
+                <div role="status" className="surface rounded-2xl p-10 text-center space-y-4">
+                  <CheckCircle size={36} className="neon mx-auto" aria-hidden="true" />
+                  <h2 className="font-display font-bold text-xl" style={{ color: "var(--fg)" }}>
                     ¡Mensaje enviado!
-                  </h3>
+                  </h2>
                   <p className="text-sm" style={{ color: "var(--fg-muted)" }}>
                     Recibimos tu consulta. Te respondemos en menos de 24 horas.
                   </p>
@@ -158,15 +157,29 @@ export default function ContactoPage() {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-5">
+                  {/* Honeypot anti-spam: invisible para personas, los bots lo rellenan */}
+                  <div aria-hidden="true" className="absolute -left-[9999px] h-0 w-0 overflow-hidden">
+                    <label htmlFor="c-website">Sitio web (no completar)</label>
+                    <input
+                      type="text"
+                      id="c-website"
+                      name="website"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      value={honeypot}
+                      onChange={(e) => setHoneypot(e.target.value)}
+                    />
+                  </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div className="space-y-1.5">
-                      <label
+                      <label htmlFor="c-nombre"
                         className="text-xs font-semibold uppercase tracking-wider"
                         style={{ color: "var(--fg-muted)" }}
                       >
                         Nombre *
                       </label>
                       <input
+                        id="c-nombre"
                         type="text"
                         name="nombre"
                         required
@@ -177,13 +190,14 @@ export default function ContactoPage() {
                       />
                     </div>
                     <div className="space-y-1.5">
-                      <label
+                      <label htmlFor="c-empresa"
                         className="text-xs font-semibold uppercase tracking-wider"
                         style={{ color: "var(--fg-muted)" }}
                       >
                         Empresa (opcional)
                       </label>
                       <input
+                        id="c-empresa"
                         type="text"
                         name="empresa"
                         value={formData.empresa}
@@ -196,13 +210,14 @@ export default function ContactoPage() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div className="space-y-1.5">
-                      <label
+                      <label htmlFor="c-email"
                         className="text-xs font-semibold uppercase tracking-wider"
                         style={{ color: "var(--fg-muted)" }}
                       >
                         Email *
                       </label>
                       <input
+                        id="c-email"
                         type="email"
                         name="email"
                         required
@@ -213,13 +228,14 @@ export default function ContactoPage() {
                       />
                     </div>
                     <div className="space-y-1.5">
-                      <label
+                      <label htmlFor="c-whatsapp"
                         className="text-xs font-semibold uppercase tracking-wider"
                         style={{ color: "var(--fg-muted)" }}
                       >
                         WhatsApp / Teléfono *
                       </label>
                       <input
+                        id="c-whatsapp"
                         type="tel"
                         name="whatsapp"
                         required
@@ -232,13 +248,14 @@ export default function ContactoPage() {
                   </div>
 
                   <div className="space-y-1.5">
-                    <label
+                    <label htmlFor="c-tipoProyecto"
                       className="text-xs font-semibold uppercase tracking-wider"
                       style={{ color: "var(--fg-muted)" }}
                     >
                       Tipo de proyecto *
                     </label>
                     <select
+                      id="c-tipoProyecto"
                       name="tipoProyecto"
                       required
                       value={formData.tipoProyecto}
@@ -254,13 +271,14 @@ export default function ContactoPage() {
                   </div>
 
                   <div className="space-y-1.5">
-                    <label
+                    <label htmlFor="c-mensaje"
                       className="text-xs font-semibold uppercase tracking-wider"
                       style={{ color: "var(--fg-muted)" }}
                     >
                       Mensaje *
                     </label>
                     <textarea
+                      id="c-mensaje"
                       name="mensaje"
                       required
                       rows={5}
@@ -272,8 +290,8 @@ export default function ContactoPage() {
                   </div>
 
                   {formState === "error" && (
-                    <p className="text-sm text-red-500">
-                      Hubo un error al enviar. Intentá de nuevo o escribinos por WhatsApp.
+                    <p role="alert" className="text-sm text-red-500">
+                      Hubo un error al enviar. Intentá de nuevo o escribinos por correo.
                     </p>
                   )}
 
@@ -317,25 +335,11 @@ export default function ContactoPage() {
                       infooofis@gmail.com
                     </a>
                   </li>
-                  <li className="flex items-center gap-3 text-sm" style={{ color: "var(--fg-muted)" }}>
-                    <MessageCircle size={16} className="neon shrink-0" />
-                    <span>[REDACTADO]</span>
-                  </li>
                   <li className="flex items-start gap-3 text-sm" style={{ color: "var(--fg-muted)" }}>
                     <MapPin size={16} className="neon shrink-0 mt-0.5" />
-                    <span>Atendemos a todo Paraguay, de forma 100% remota</span>
+                    <span>Atendemos a toda Latinoamérica, de forma 100% remota</span>
                   </li>
                 </ul>
-
-                <Link
-                  href="https://wa.me/[REDACTADO]?text=Hola%2C%20me%20interesa%20solicitar%20informaci%C3%B3n%20sobre%20sus%20servicios."
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn-outline px-5 py-2.5 text-sm rounded-md gap-2 mt-5 w-full justify-center"
-                >
-                  Hablar por WhatsApp
-                  <ArrowRight size={14} />
-                </Link>
               </div>
 
               <div className="surface rounded-xl p-5">

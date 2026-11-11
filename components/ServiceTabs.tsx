@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
+import type { KeyboardEvent } from "react";
 import Link from "next/link";
 import { Clock, ArrowRight } from "lucide-react";
 
@@ -63,7 +64,21 @@ const TABS: Tab[] = [
 
 export default function ServiceTabs() {
   const [active, setActive] = useState(0);
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const tab = TABS[active];
+
+  // Patrón WAI-ARIA de tabs: flechas, Inicio y Fin mueven el foco y la selección.
+  function handleKeyDown(e: KeyboardEvent<HTMLButtonElement>, index: number) {
+    let next = index;
+    if (e.key === "ArrowRight") next = (index + 1) % TABS.length;
+    else if (e.key === "ArrowLeft") next = (index - 1 + TABS.length) % TABS.length;
+    else if (e.key === "Home") next = 0;
+    else if (e.key === "End") next = TABS.length - 1;
+    else return;
+    e.preventDefault();
+    setActive(next);
+    tabRefs.current[next]?.focus();
+  }
 
   return (
     <>
@@ -82,6 +97,7 @@ export default function ServiceTabs() {
         <select
           value={active}
           onChange={(e) => setActive(Number(e.target.value))}
+          aria-label="Seleccionar servicio"
           className="w-full p-3 rounded-lg cursor-pointer appearance-none"
           style={{
             border: "1px solid rgba(118,185,0,0.3)",
@@ -101,17 +117,28 @@ export default function ServiceTabs() {
 
       {/* Tab bar — visible ≥768px */}
       <div
+        role="tablist"
+        aria-label="Servicios"
         className="hidden md:flex overflow-x-auto border-b"
         style={{ borderColor: "var(--border)" }}
       >
         {TABS.map((t, i) => (
           <button
             key={t.id}
+            ref={(el) => {
+              tabRefs.current[i] = el;
+            }}
+            role="tab"
+            id={`tab-${t.id}`}
+            aria-selected={i === active}
+            aria-controls={`tabpanel-${t.id}`}
+            tabIndex={i === active ? 0 : -1}
             onClick={() => setActive(i)}
+            onKeyDown={(e) => handleKeyDown(e, i)}
             className={`shrink-0 px-5 py-3.5 text-sm font-display font-semibold whitespace-nowrap transition-colors duration-150 cursor-pointer ${
               i === active
                 ? "bg-[#76b900] text-black"
-                : "bg-transparent text-[#a0a0a0] hover:text-white"
+                : "bg-transparent text-[var(--fg-muted)] hover:text-[var(--fg)]"
             }`}
           >
             {t.label}
@@ -122,6 +149,10 @@ export default function ServiceTabs() {
       {/* Tab content */}
       <div
         key={active}
+        role="tabpanel"
+        id={`tabpanel-${tab.id}`}
+        aria-labelledby={`tab-${tab.id}`}
+        tabIndex={0}
         className="tab-content pt-10 max-w-[720px]"
         style={{ animation: "tabFadeIn 0.2s ease both" }}
       >
@@ -147,14 +178,14 @@ export default function ServiceTabs() {
         <div className="mt-8">
           <Link href="/contacto" className="btn btn-neon px-6 py-3 text-sm rounded-md gap-2">
             Solicitar presupuesto
-            <ArrowRight size={15} />
+            <ArrowRight size={15} aria-hidden="true" />
           </Link>
         </div>
       </div>
 
       {/* Delivery note */}
       <div className="mt-10 flex items-center gap-3 surface rounded-xl px-5 py-4 max-w-xl">
-        <Clock size={16} className="neon shrink-0" />
+        <Clock size={16} className="neon shrink-0" aria-hidden="true" />
         <p className="text-sm" style={{ color: "var(--fg-muted)" }}>
           <span className="font-semibold" style={{ color: "var(--fg)" }}>
             Tiempos de entrega estimados:
@@ -191,7 +222,7 @@ export default function ServiceTabs() {
               Si todavía no tenés, te orientamos en la elección y la configuración inicial queda
               incluida en el desarrollo.
             </p>
-            <p className="text-sm italic leading-relaxed" style={{ color: "#a0a0a0" }}>
+            <p className="text-sm italic leading-relaxed" style={{ color: "var(--fg-muted)" }}>
               El hosting tiene un costo mensual o anual independiente al del desarrollo. Su
               contratación es opcional y a cargo del cliente.
             </p>

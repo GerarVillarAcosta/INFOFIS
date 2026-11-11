@@ -6,7 +6,7 @@ import CircuitBackground from "@/components/CircuitBackground";
 export const metadata: Metadata = {
   title: "Nosotros",
   description:
-    "Conocé a INFOFIS: empresa paraguaya especializada en desarrollo web y automatización de procesos para PYMEs y MIPYMEs.",
+    "Conocé a INFOFIS: empresa paraguaya especializada en desarrollo web y automatización de procesos para PYMEs y MIPYMEs de Latinoamérica.",
 };
 
 const VALUES = [
@@ -40,8 +40,8 @@ const VALUES = [
 const DIFFERENTIALS = [
   "Precios modulares y transparentes, sin costos ocultos",
   "Comunicación directa durante todo el proyecto",
-  "Atención remota a todo el país, sin necesidad de reuniones presenciales",
-  "Soluciones adaptadas a la realidad de las PYMEs paraguayas",
+  "Atención remota a toda Latinoamérica, sin necesidad de reuniones presenciales",
+  "Soluciones adaptadas a la realidad de las PYMEs latinoamericanas",
   "Tecnologías modernas con soporte post-entrega",
   "Asesoramiento honesto",
 ];
@@ -63,7 +63,7 @@ export default function NosotrosPage() {
             </h1>
             <p className="text-base leading-relaxed" style={{ color: "var(--fg-muted)" }}>
               Empresa paraguaya de desarrollo web y automatización de procesos para PYMEs y
-              MIPYMEs de todo el país.
+              MIPYMEs de toda Latinoamérica.
             </p>
           </div>
         </div>
@@ -76,7 +76,7 @@ export default function NosotrosPage() {
             <p className="text-base leading-relaxed" style={{ color: "var(--fg-muted)" }}>
               INFOFIS es una empresa paraguaya especializada en desarrollo web y automatización de
               procesos para PYMEs y MIPYMEs. Trabajamos de forma 100% remota, lo que nos permite
-              atender negocios en cualquier punto del país sin restricciones geográficas.
+              atender negocios en cualquier punto de Latinoamérica sin restricciones geográficas.
             </p>
             <p className="text-base leading-relaxed" style={{ color: "var(--fg-muted)" }}>
               Creemos que toda empresa, sin importar su tamaño o ubicación, merece tener una
@@ -96,7 +96,7 @@ export default function NosotrosPage() {
             <div className="rounded-2xl p-8 reveal card-hover" style={{ backgroundColor: "var(--card)", border: "1px solid rgba(118,185,0,0.15)" }}>
               <p className="section-badge mb-3">Misión</p>
               <p className="text-sm leading-relaxed" style={{ color: "var(--fg-muted)" }}>
-                Ayudar a las PYMEs y MIPYMEs de Paraguay a digitalizarse de forma accesible, con
+                Ayudar a las PYMEs y MIPYMEs de Latinoamérica a digitalizarse de forma accesible, con
                 soluciones web y de automatización adaptadas a la realidad de cada negocio.
               </p>
             </div>
@@ -105,7 +105,7 @@ export default function NosotrosPage() {
               <p className="section-badge mb-3">Visión</p>
               <p className="text-sm leading-relaxed" style={{ color: "var(--fg-muted)" }}>
                 Ser un referente de confianza en desarrollo web y automatización para pequeñas y
-                medianas empresas paraguayas, reconocidos por nuestra transparencia, cercanía y
+                medianas empresas de Latinoamérica, reconocidos por nuestra transparencia, cercanía y
                 resultados concretos.
               </p>
             </div>
@@ -163,7 +163,7 @@ export default function NosotrosPage() {
                       {v.title}
                     </h3>
                   </div>
-                  <p className="text-sm leading-relaxed pl-14" style={{ color: "#a0a0a0" }}>
+                  <p className="text-sm leading-relaxed pl-14" style={{ color: "var(--fg-muted)" }}>
                     {v.desc}
                   </p>
                 </div>

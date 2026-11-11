@@ -4,7 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { useTheme } from "next-themes";
 import { Sun, Moon, Menu, X } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useMounted } from "@/lib/useMounted";
 import { usePathname } from "next/navigation";
 
 const NAV = [
@@ -18,11 +19,9 @@ const NAV = [
 
 export function Header() {
   const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
+  const mounted = useMounted();
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
-
-  useEffect(() => setMounted(true), []);
 
   return (
     <header
@@ -43,13 +42,14 @@ export function Header() {
         </Link>
 
         {/* Desktop nav — visible only ≥1024px */}
-        <nav className="hidden lg:flex items-center gap-7">
+        <nav aria-label="Principal" className="hidden lg:flex items-center gap-7">
           {NAV.map((l) => (
             <Link
               key={l.href}
               href={l.href}
+              aria-current={pathname === l.href ? "page" : undefined}
               className={`text-sm transition-colors duration-150 hover:text-[#76b900] ${
-                pathname === l.href ? "text-[#76b900] font-medium" : "muted"
+                pathname === l.href ? "neon font-medium" : "muted"
               }`}
             >
               {l.label}
@@ -63,7 +63,7 @@ export function Header() {
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               className="p-2 rounded-md transition-colors duration-150 hover:bg-[var(--card)] muted hover:text-[var(--fg)]"
-              aria-label="Cambiar tema"
+              aria-label={theme === "dark" ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
             >
               {theme === "dark" ? <Sun size={17} /> : <Moon size={17} />}
             </button>
@@ -82,7 +82,9 @@ export function Header() {
             className="lg:hidden p-2 rounded-md"
             style={{ color: "var(--fg)" }}
             onClick={() => setOpen(!open)}
-            aria-label="Abrir menú"
+            aria-label={open ? "Cerrar menú" : "Abrir menú"}
+            aria-expanded={open}
+            aria-controls="mobile-menu"
           >
             {open ? <X size={21} /> : <Menu size={21} />}
           </button>
@@ -92,6 +94,7 @@ export function Header() {
       {/* Mobile/tablet menu — visible <1024px */}
       {open && (
         <div
+          id="mobile-menu"
           className="lg:hidden border-t px-4 py-5 flex flex-col gap-1"
           style={{ backgroundColor: "var(--bg)", borderColor: "var(--border)" }}
         >

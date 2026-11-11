@@ -3,8 +3,7 @@ import { Space_Grotesk, Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
-import { WhatsAppButton } from "@/components/WhatsAppButton";
+import Footer from "@/components/Footer";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -20,19 +19,37 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://infofis.vercel.app"),
   title: {
     default: "INFOFIS — Desarrollo Web y Automatización para PYMEs",
     template: "%s | INFOFIS",
   },
   description:
-    "Sitios web profesionales y automatización de procesos para PYMEs y MIPYMEs del interior de Paraguay. Desarrollo con Next.js, WordPress y herramientas modernas.",
+    "Empresa paraguaya de desarrollo web y automatización para PYMEs de Latinoamérica. Presencia digital profesional, catálogos online y automatización de procesos.",
   keywords: [
-    "desarrollo web Paraguay",
+    "desarrollo web Latinoamérica",
     "sitios web PYMEs",
     "automatización procesos",
     "INFOFIS",
-    "diseño web interior Paraguay",
+    "empresa paraguaya",
   ],
+  openGraph: {
+    title: "INFOFIS",
+    description:
+      "Empresa paraguaya de desarrollo web y automatización para PYMEs de Latinoamérica. Presencia digital profesional, catálogos online y automatización de procesos.",
+    url: "/",
+    siteName: "INFOFIS",
+    locale: "es_PY",
+    type: "website",
+    images: [{ url: "/imagenes/favicon-og.png", width: 256, height: 256, alt: "Icono de INFOFIS" }],
+  },
+  twitter: {
+    card: "summary",
+    title: "INFOFIS",
+    description:
+      "Empresa paraguaya de desarrollo web y automatización para PYMEs de Latinoamérica.",
+    images: ["/imagenes/favicon-og.png"],
+  },
 };
 
 export default function RootLayout({
@@ -49,7 +66,6 @@ export default function RootLayout({
           <Header />
           <main className="flex-1">{children}</main>
           <Footer />
-          <WhatsAppButton />
         </ThemeProvider>
       </body>
     </html>
